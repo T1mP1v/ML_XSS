@@ -1,0 +1,17 @@
+text,label
+/search?q=hello,0
+<iframe src='javascript:alert(1)'>,1
+<script>alert('XSS')</script>,1
+/home,0
+/login?username=admin&password=<script>alert('hack')</script>,1
+<body onload=alert('XSS')>,1
+/products?name=<img src=x onerror=alert('XSS')>,1
+/contact?message=hello+world,0
+<svg onload=alert(1)>,1
+/login?username=user&password=pass,0
+/search?q=<script>alert(123)</script>,1
+/products?category=books,0
+/order?item=book&quantity=2,0
+/profile?id=123,0
+<img src=x onerror=alert(1)>,1
+/about,0

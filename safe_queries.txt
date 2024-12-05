@@ -1,0 +1,8 @@
+/home
+/about
+/search?q=hello
+/profile?id=123
+/login?username=user&password=pass
+/products?category=books
+/contact?message=hello+world
+/order?item=book&quantity=2

