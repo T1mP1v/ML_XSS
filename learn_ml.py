@@ -3,12 +3,12 @@ from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import classification_report, accuracy_score
+from joblib import dump
 
 # 1. Загрузка данных
 # Замените 'data.csv' на путь к вашему датасету
-# Ожидаемый формат: две колонки 'text' (запрос) и 'label' (0 - безопасный, 1 - XSS-атака)
+# Формат: 'method', 'url', 'body', 'label'
 data = pd.read_csv('data.csv')
-
 # 2. Разделение данных
 X = data['text']
 y = data['label']
@@ -30,8 +30,26 @@ print("Accuracy:", accuracy_score(y_test, y_pred))
 print("\nClassification Report:\n", classification_report(y_test, y_pred))
 
 # 6. Тестирование на новых данных
-new_queries = ["<script>alert('XSS')</script>", "Hello, world!"]
-new_queries_tfidf = vectorizer.transform(new_queries)
-predictions = model.predict(new_queries_tfidf)
+# new_queries = [
+#     "GET /order?param=<scriptfaassafsa>",
+#     "POST /cart {\"param\": \"book\"}",
+#     "GET /search?q=hello",
+#     "POST /login {\"username\": \"admin\", \"password\": \"password123\"}"
+# ]
+# new_queries_tfidf = vectorizer.transform(new_queries)
+# predictions = model.predict(new_queries_tfidf)
 
-print("\nPredictions for new queries:", predictions)
+# print("\nPredictions for new queries:")
+# for query, label in zip(new_queries, predictions):
+#     print(f"Query: {query} -> Prediction: {'XSS' if label == 1 else 'Safe'}")
+
+# Шаг 7: Сохранение модели и векторизатора
+dump(vectorizer, "tfidf_vectorizer.joblib")
+dump(model, "xss_detection_model.joblib")
+print("Модель и векторизатор успешно сохранены!")
+
+print(f'''\n⚠️ Обнаружена XSS-атака!")
+            IP: {log_data['ip']}
+            Дата и время: {log_data['datetime']}
+            Запрос: {request_query}
+            User-Agent: {log_data['user_agent']}''')
