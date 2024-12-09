@@ -47,9 +47,3 @@ print("\nClassification Report:\n", classification_report(y_test, y_pred))
 dump(vectorizer, "tfidf_vectorizer.joblib")
 dump(model, "xss_detection_model.joblib")
 print("Модель и векторизатор успешно сохранены!")
-
-print(f'''\n⚠️ Обнаружена XSS-атака!")
-            IP: {log_data['ip']}
-            Дата и время: {log_data['datetime']}
-            Запрос: {request_query}
-            User-Agent: {log_data['user_agent']}''')

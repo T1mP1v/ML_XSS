@@ -3,15 +3,48 @@ import time
 from joblib import load
 from sklearn.feature_extraction.text import TfidfVectorizer
 import os
+from enum import Enum
+import logging
+import random
 
-print('''
+os_windows = (os.name == 'nt')
+
+HEADER = '''
 ██╗  ██╗███████╗███████╗         █████╗ ███╗   ██╗ █████╗ ██╗     ██╗███████╗ █████╗ ████████╗ ██████╗ ██████╗ 
 ╚██╗██╔╝██╔════╝██╔════╝        ██╔══██╗████╗  ██║██╔══██╗██║     ██║╚══███╔╝██╔══██╗╚══██╔══╝██╔═══██╗██╔══██╗
  ╚███╔╝ ███████╗███████╗        ███████║██╔██╗ ██║███████║██║     ██║  ███╔╝ ███████║   ██║   ██║   ██║██████╔╝
  ██╔██╗ ╚════██║╚════██║        ██╔══██║██║╚██╗██║██╔══██║██║     ██║ ███╔╝  ██╔══██║   ██║   ██║   ██║██╔══██╗
 ██╔╝ ██╗███████║███████║███████╗██║  ██║██║ ╚████║██║  ██║███████╗██║███████╗██║  ██║   ██║   ╚██████╔╝██║  ██║
-╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝╚══════╝╚═╝╚══════╝╚═╝  ╚═╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝''')
+╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝╚══════╝╚═╝╚══════╝╚═╝  ╚═╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝'''
+class Style(Enum):
+    """
+    Bash escape sequences, see:
+    https://misc.flogisoft.com/bash/tip_colors_and_formatting
+    """
+    BOLD = 1
+    FG_BLACK = 30
+    FG_RED = 31
+    FG_GREEN = 32
+    FG_YELLOW = 33
+    FG_BLUE = 34
+    FG_MAGENTA = 35
+    FG_CYAN = 36
+    FG_LIGHT_GRAY = 37
 
+BRIGHT_COLORS = [Style.FG_RED, Style.FG_GREEN, Style.FG_BLUE,
+                 Style.FG_MAGENTA, Style.FG_CYAN]
+
+VERBOSE_LINES = 5
+def highlight(text, style=None):
+    if os_windows:
+        return text
+
+    if style is None:
+        style = [Style.BOLD, random.choice(BRIGHT_COLORS)]
+    return '\033[{}m'.format(';'.join(str(item.value) for item in style)) + text + '\033[0m'
+log_format = '%(asctime)s {} %(message)s'.format(highlight('%(levelname)s', [Style.FG_YELLOW]))
+logging.basicConfig(format=log_format, datefmt='%H:%M:%S', level=logging.DEBUG)
+print(highlight(HEADER))
 # Загрузка предобученной модели и векторизатора
 try:
     model = load("xss_detection_model.joblib")
