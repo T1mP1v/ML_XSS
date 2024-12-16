@@ -2,7 +2,7 @@ import pandas as pd
 import random
 
 # Путь к данным
-safe_file_path = "safe_queries.txt"
+safe_file_path = "safe_dataset.txt"
 xss_file_path = "xss_dataset.txt"
 
 # Чтение содержимого файлов

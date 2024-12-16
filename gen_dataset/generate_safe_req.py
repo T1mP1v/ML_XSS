@@ -1,17 +1,14 @@
 import random
-import json
 
-# Примеры безопасных параметров
-params = [
-    "book", "shoes", "electronics", "laptop", "phone", 
-    "apple", "banana", "category1", "username1", "password123",
-    "query", "search_term", "action1", "value1"
-]
+def load_file(file_path):
+    with open(file_path, 'r') as file:
+        payloads = [line.strip() for line in file if line.strip()]
+    return payloads
+
 # Пути для запросов
-paths = ["/order", "/search", "/cart", "/checkout", "/login", "/products", "/wishlist", "/api"]
-
-params_value = ["123","shoes","2","price_desc","color:red","laptop","electronics","add_to_cart","admin","abc123xyz"]
-
+paths = load_file("directory-list-2.3-small.txt")
+params = load_file("burp-parameter-names.txt")
+num_queries = 10000
 
 def generate_safe_get_requests(num_queries):
     """Генерация безопасных GET-запросов."""
@@ -19,18 +16,17 @@ def generate_safe_get_requests(num_queries):
     for _ in range(num_queries):
         path = random.choice(paths)
         param = random.choice(params)
-        param_value = random.choice(params_value)
         # Формируем безопасный GET-запрос
         if random.random() < 0.5:
-            query = f"{path}?{param}={params_value}"
+            query = f"/{path}?{param}={param}"  # Исправлено на param вместо params
+            queries.append(query)
     return queries
 
-
-
-safe_get_requests = generate_safe_get_requests(1000)
+safe_get_requests = generate_safe_get_requests(num_queries)
 
 # Сохранение в файл txt
 with open("safe_dataset.txt", "w") as file:
-    json.dump(safe_get_requests, file, indent=4)
+    for request in safe_get_requests:
+        file.write(request + "\n")  # Записываем каждую строку в файл
 
-print(f"Сгенерировано {len(safe_get_requests)} безопасных запросов (GET и POST), сохранено в 'safe_dataset.json'.")
+print(f"Сгенерировано {len(safe_get_requests)} безопасных запросов (GET), сохранено в 'safe_dataset.txt'.")

@@ -1,6 +1,11 @@
 
-⚠️ Обнаружена XSS-атака!
+⚠️ Обнаружена потенциальная XSS-атака!
 IP: ::1
-Дата и время: 09/Dec/2024:17:32:47 +0000
-Запрос: GET /?q=%3Cdiv+id%3D%2264%22%3E%3C%21DOCTYPE+x%5B%3C%21ENTITY+x+SYSTEM+%22http%3A%2F%2Fhtml5sec.org%2Ftest.xxe%22%3E%5D%3E%3Cy%3E%26x%3B%3C%2Fy%3E%2F%2F%5B%22%27%60--%3E%5D%5D%3E%5D%3C%2Fdiv%3E%3Cdiv+id%3D%2265%22%3E%3Csvg+onload%3D%22javascript%3Aalert%2865%29%22+xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3C%2Fsvg%3E%2F%2F%5B%22%27%60--%3E%5D%5D%3E%5D%3C%2Fdiv%3E+%3Cdiv+id%3D%2266%22%3E%3C%3Fxml+version%3D%221.0%22%3F%3E
+Дата и время: 15/Dec/2024:20:50:39 +0000
+Запрос: GET /?q=%3C%3E
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:133.0) Gecko/20100101 Firefox/133.0
+⚠️ Обнаружена потенциальная XSS-атака!
+IP: ::1
+Дата и время: 15/Dec/2024:20:50:49 +0000
+Запрос: GET /?q=%3C%3CSCRIPT%3Ealert%28%22XSS%22%29%3B%2F%2F%3C%3C%2FSCRIPT%3E
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:133.0) Gecko/20100101 Firefox/133.0
